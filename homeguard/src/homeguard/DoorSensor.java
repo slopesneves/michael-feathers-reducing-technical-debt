@@ -9,4 +9,9 @@ public class DoorSensor extends Sensor{
   public String getType() {
     return Sensor.DOOR;
   }
+
+  @Override
+  public String getMessage() {
+    return getLocation() + " is closed";
+  }
 }

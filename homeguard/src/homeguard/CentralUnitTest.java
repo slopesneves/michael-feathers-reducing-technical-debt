@@ -48,7 +48,7 @@ public class CentralUnitTest {
     //given
     final String sensorId = "42";
     final String location = "Marseille";
-    final Sensor sensor = new Sensor(sensorId, location, Sensor.DOOR);
+    final Sensor sensor = SensorFactory.create(sensorId, location, Sensor.DOOR);
 
     //when
     sensor.adjustStatus("NON TRIPPED");
@@ -107,6 +107,15 @@ public class CentralUnitTest {
     @Override
     public void showMessage(String message) {
       this.lastMessage = message;
+    }
+  }
+
+  private static class SensorFactory {
+    static Sensor create(String id, String location, String type) {
+      if (Sensor.DOOR.equals(type)) {
+        return new DoorSensor(id, location);
+      }
+      return new Sensor(id, location, type);
     }
   }
 
