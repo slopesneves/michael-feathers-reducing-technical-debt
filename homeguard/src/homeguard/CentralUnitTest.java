@@ -43,6 +43,25 @@ public class CentralUnitTest {
 
   }
 
+  @Test
+  public void sensor_message_should_be_closed_on_packet_non_tripped_door_packet() {
+    //given
+    CentralUnit centralUnit = new CentralUnit();
+
+    final String sensorId = "42";
+    final String packet = String.join(PACKET_DELIMETER, sensorId, "non tripped status");
+    final String location = "Marseille";
+    centralUnit.registerSensor(new Sensor(sensorId, location, Sensor.DOOR));
+
+    //when
+    centralUnit.parseRadioBroadcast(packet);
+
+    //then
+    final Sensor sensorFromCentralUnit = findSensorById(centralUnit, sensorId);
+    Assertions.assertEquals(sensorFromCentralUnit.getSensorMessage(), location + " is closed");
+
+  }
+
 
 
   private Sensor findSensorById(CentralUnit centralUnit, String sensorId) {
