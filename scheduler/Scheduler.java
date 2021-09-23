@@ -20,9 +20,10 @@ public class Scheduler {
 		display = new SchedulerDisplay();		
 	}
 
-	public Scheduler(String owner, Display display) {
+	public Scheduler(String owner, Display display, MailService mailService) {
 		this(owner);
 		this.display = display;
+		this.mailService = mailService;
 	}
 	
 	public void addEvent(Event event) {
