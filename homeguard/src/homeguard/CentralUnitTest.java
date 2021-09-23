@@ -26,6 +26,23 @@ public class CentralUnitTest {
 
   }
 
+  @Test
+  public void view_should_display_invalid_sensor_message_when_central_unit_received_a_packet_for_unregistered_sensor() {
+    //given
+    CentralUnit centralUnit = new CentralUnit();
+    FakeView view = new FakeView();
+    centralUnit.setView(view);
+
+    final String packet = String.join(PACKET_DELIMETER, "unregistered sensor id", " random sensor status");
+
+    //when
+    centralUnit.parseRadioBroadcast(packet);
+
+    //then
+    Assertions.assertEquals(view.lastMessage, "attempt to parse for invalid sensor");
+
+  }
+
 
 
   private Sensor findSensorById(CentralUnit centralUnit, String sensorId) {
@@ -38,6 +55,15 @@ public class CentralUnitTest {
           Assertions.fail(message);
           return new IllegalStateException(message);
         });
+  }
+
+  private static class FakeView implements HomeGuardView {
+
+    public String lastMessage = "";
+    @Override
+    public void showMessage(String message) {
+      this.lastMessage = message;
+    }
   }
 
 }

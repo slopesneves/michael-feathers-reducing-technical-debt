@@ -34,12 +34,12 @@ public class Sensor
 		return location;
 	}
 
-	public void trip()
+	private void trip()
 	{
 		tripped = true;
 	}
 
-	public void reset()
+	private void reset()
 	{
 		tripped = false;
 	}

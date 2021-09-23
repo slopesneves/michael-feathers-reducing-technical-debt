@@ -93,10 +93,12 @@ public class CentralUnit
 		}
 
 		//trip or reset sensor
-		if(sensor != null)
-		{
-			sensor.adjustStatus(status);
+		if(sensor == null) {
+			view.showMessage("attempt to parse for invalid sensor");
+			return;
 		}
+
+		sensor.adjustStatus(status);
 
 		//get the message from the sensor and display it
 		String message = sensor.getSensorMessage();
