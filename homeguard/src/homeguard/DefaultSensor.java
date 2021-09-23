@@ -14,4 +14,9 @@ public class DefaultSensor extends Sensor{
   public String getMessage() {
     return "default";
   }
+
+  @Override
+  String tripMessagePart() {
+    return "";
+  }
 }

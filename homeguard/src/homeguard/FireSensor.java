@@ -9,4 +9,10 @@ public class FireSensor extends Sensor{
   public String getType() {
     return Sensor.FIRE;
   }
+
+  @Override
+  String tripMessagePart() {
+    //TODO not yet implemented
+    return null;
+  }
 }

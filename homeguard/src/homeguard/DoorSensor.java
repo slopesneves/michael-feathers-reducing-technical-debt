@@ -10,12 +10,7 @@ public class DoorSensor extends Sensor{
     return Sensor.DOOR;
   }
 
-  @Override
-  public String getMessage() {
-    return this.getLocation() + " is " + tripMessagePart();
-  }
-
-  private String tripMessagePart() {
+  protected String tripMessagePart() {
     return this.isTripped() ? "open" : "closed";
   }
 }

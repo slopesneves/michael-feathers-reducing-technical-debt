@@ -9,4 +9,10 @@ public class MotionSensor extends Sensor{
   public String getType() {
     return Sensor.MOTION;
   }
+
+  @Override
+  String tripMessagePart() {
+    //TODO implement case
+    return null;
+  }
 }

@@ -51,23 +51,10 @@ public abstract class Sensor
 
 	public String getMessage()
 	{
-		String message = "default";
-		if(!isTripped())
-		{
-			if(getType().equals(MOTION))
-				return getLocation() + " is motionless";
-			else if(getType().equals(FIRE))
-				return getLocation() + " temperature is normal";
-		}
-		else
-		{
-			if(getType().equals(MOTION))
-				return "Motion detected in " + getLocation();
-			else if(getType().equals(FIRE))
-				return getLocation() + " is on FIRE!";
-		}
-		return message;
+		return this.getLocation() + " is " + this.tripMessagePart();
 	}
+
+	abstract String tripMessagePart();
 
 	void adjustStatus(String status) {
 		if("TRIPPED".equals(status))

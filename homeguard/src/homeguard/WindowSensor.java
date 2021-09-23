@@ -10,12 +10,8 @@ public class WindowSensor extends Sensor{
     return Sensor.WINDOW;
   }
 
-  @Override
-  public String getMessage() {
-    return getLocation() + " is " + tripMessagePart();
-  }
 
-  private String tripMessagePart() {
+  protected String tripMessagePart() {
     return this.isTripped() ? "ajar" : "sealed";
   }
 }
