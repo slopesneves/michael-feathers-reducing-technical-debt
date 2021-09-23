@@ -102,7 +102,7 @@ public class CentralUnit
 		}
 
 		//get the message from the sensor and display it
-		String message = getSensorMessage(sensor);
+		String message = sensor.getSensorMessage();
 		view.showMessage(message);
 
 		// sound the alarm if armed
@@ -110,29 +110,7 @@ public class CentralUnit
 			audibleAlarm.sound();
 
 		// check if a sensor test is running and adjust status
-		if(diagnostics.runningSensorTest)
-		{
-			if("TRIPPED".equals(status))
-			{
-				diagnostics.sensorTestStatusMap.put(id, PASS);
-			}
-
-			// check to see if test is complete
-			boolean done = true;
-			for(Iterator iterator = diagnostics.sensorTestStatusMap.values().iterator(); iterator.hasNext();)
-			{
-				String testStatus = (String) iterator.next();
-				if(PENDING.equals(testStatus))
-				{
-					done = false;
-					break;
-				}
-			}
-
-			//terminate test if complete
-			if(done)
-				terminateSensorTest();
-		}
+		diagnostics.adjustStatus(id, status, this);
 	}
 
 	public void runSensorTest()
@@ -158,40 +136,13 @@ public class CentralUnit
 	// used during sensor test
 	public String getSesnsorTestStatus()
 	{
-		return diagnostics.sensorTestStatus;
+		return diagnostics.getSensorTestStatus();
 	}
 
 	// used during sensor test
 	public Map getSensorTestStatusMap()
 	{
-		return diagnostics.sensorTestStatusMap;
+		return diagnostics.getSensorTestStatusMap();
 	}
 
-	public String getSensorMessage(Sensor sensor)
-	{
-		String message = "default";
-		if(!sensor.isTripped())
-		{
-			if(sensor.getType().equals(Sensor.DOOR))
-				return sensor.getLocation() + " is closed";
-			else if(sensor.getType().equals(Sensor.WINDOW))
-				return sensor.getLocation() + " is sealed";
-			else if(sensor.getType().equals(Sensor.MOTION))
-				return sensor.getLocation() + " is motionless";
-			else if(sensor.getType().equals(Sensor.FIRE))
-				return sensor.getLocation() + " temperature is normal";
-		}
-		else
-		{
-			if(sensor.getType().equals(Sensor.DOOR))
-				return sensor.getLocation() + " is open";
-			else if(sensor.getType().equals(Sensor.WINDOW))
-				return sensor.getLocation() + " is ajar";
-			else if(sensor.getType().equals(Sensor.MOTION))
-				return "Motion detected in " + sensor.getLocation();
-			else if(sensor.getType().equals(Sensor.FIRE))
-				return sensor.getLocation() + " is on FIRE!";
-		}
-		return message;
-	}
 }
