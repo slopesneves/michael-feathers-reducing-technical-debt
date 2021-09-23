@@ -101,7 +101,7 @@ public class CentralUnit
 		sensor.adjustStatus(status);
 
 		//get the message from the sensor and display it
-		String message = sensor.getSensorMessage();
+		String message = sensor.getMessage();
 		view.showMessage(message);
 
 		// sound the alarm if armed

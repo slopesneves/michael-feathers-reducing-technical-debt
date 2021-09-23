@@ -46,38 +46,44 @@ public class CentralUnitTest {
   @Test
   public void sensor_message_should_be_closed_on_packet_non_tripped_door_packet() {
     //given
-    CentralUnit centralUnit = new CentralUnit();
-
     final String sensorId = "42";
-    final String packet = String.join(PACKET_DELIMETER, sensorId, "non tripped status");
     final String location = "Marseille";
-    centralUnit.registerSensor(new Sensor(sensorId, location, Sensor.DOOR));
+    final Sensor sensor = new Sensor(sensorId, location, Sensor.DOOR);
 
     //when
-    centralUnit.parseRadioBroadcast(packet);
+    sensor.adjustStatus("NON TRIPPED");
 
     //then
-    final Sensor sensorFromCentralUnit = findSensorById(centralUnit, sensorId);
-    Assertions.assertEquals(sensorFromCentralUnit.getSensorMessage(), location + " is closed");
+    Assertions.assertEquals(sensor.getMessage(), location + " is closed");
 
   }
 
   @Test
   public void sensor_message_should_be_open_on_tripped_door_packet() {
     //given
-    CentralUnit centralUnit = new CentralUnit();
-
     final String sensorId = "42";
-    final String packet = String.join(PACKET_DELIMETER, sensorId, "TRIPPED");
     final String location = "Marseille";
-    centralUnit.registerSensor(new Sensor(sensorId, location, Sensor.DOOR));
+    final Sensor sensor = new Sensor(sensorId, location, Sensor.DOOR);
 
     //when
-    centralUnit.parseRadioBroadcast(packet);
+    sensor.adjustStatus("TRIPPED");
 
     //then
-    final Sensor sensorFromCentralUnit = findSensorById(centralUnit, sensorId);
-    Assertions.assertEquals(sensorFromCentralUnit.getSensorMessage(), location + " is open");
+    Assertions.assertEquals(sensor.getMessage(), location + " is open");
+  }
+
+  @Test
+  public void sensor_message_should_be_ajar_on_tripped_window_packet() {
+    //given
+    final String sensorId = "42";
+    final String location = "Marseille";
+    final Sensor sensor = new Sensor(sensorId, location, Sensor.WINDOW);
+
+    //when
+    sensor.adjustStatus("TRIPPED");
+
+    //then
+    Assertions.assertEquals(sensor.getMessage(), location + " is ajar");
 
   }
 

@@ -49,7 +49,7 @@ public class Sensor
 		return tripped;
 	}
 
-	public String getSensorMessage()
+	public String getMessage()
 	{
 		String message = "default";
 		if(!isTripped())
