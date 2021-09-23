@@ -95,10 +95,7 @@ public class CentralUnit
 		//trip or reset sensor
 		if(sensor != null)
 		{
-			if("TRIPPED".equals(status))
-				sensor.trip();
-			else
-				sensor.reset();
+			sensor.adjustStatus(status);
 		}
 
 		//get the message from the sensor and display it

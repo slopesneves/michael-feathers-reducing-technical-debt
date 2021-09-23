@@ -76,4 +76,11 @@ public class Sensor
 		}
 		return message;
 	}
+
+	void adjustStatus(String status) {
+		if("TRIPPED".equals(status))
+			trip();
+		else
+			reset();
+	}
 }
