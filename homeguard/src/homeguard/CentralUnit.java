@@ -12,7 +12,7 @@ public class CentralUnit
 
 	private boolean armed = false;
 	private String securityCode;
-	private List sensors = new LinkedList();
+	private List<Sensor> sensors = new LinkedList<>();
 	private HomeGuardView view = new TextView();
 	private AudibleAlarm audibleAlarm = new TextAudibleAlarm();
 
@@ -53,7 +53,7 @@ public class CentralUnit
 		return false;
 	}
 
-	public List getSensors()
+	public List<Sensor> getSensors()
 	{
 		return sensors;
 	}
