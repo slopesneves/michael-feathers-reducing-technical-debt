@@ -1,6 +1,6 @@
 package homeguard;
 
-public class Sensor
+public abstract class Sensor
 {
 	public static final String DOOR = "door";
 	public static final String MOTION = "motion";
@@ -54,18 +54,14 @@ public class Sensor
 		String message = "default";
 		if(!isTripped())
 		{
-			if(getType().equals(WINDOW))
-				return getLocation() + " is sealed";
-			else if(getType().equals(MOTION))
+			if(getType().equals(MOTION))
 				return getLocation() + " is motionless";
 			else if(getType().equals(FIRE))
 				return getLocation() + " temperature is normal";
 		}
 		else
 		{
-			if(getType().equals(WINDOW))
-				return getLocation() + " is ajar";
-			else if(getType().equals(MOTION))
+			if(getType().equals(MOTION))
 				return "Motion detected in " + getLocation();
 			else if(getType().equals(FIRE))
 				return getLocation() + " is on FIRE!";

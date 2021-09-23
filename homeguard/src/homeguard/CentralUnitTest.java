@@ -14,7 +14,7 @@ public class CentralUnitTest {
     final String sensorId = "42";
     final String sensorStatus = "TRIPPED";
 
-    centralUnit.registerSensor(new Sensor(sensorId, "California", "dunno"));
+    centralUnit.registerSensor(SensorFactory.create(sensorId, "California", "dunno"));
     final String packet = String.join(PACKET_DELIMETER, sensorId, sensorStatus);
 
     //when
@@ -73,11 +73,26 @@ public class CentralUnitTest {
   }
 
   @Test
+  public void sensor_message_should_be_sealed_on_tripped_window_packet() {
+    //given
+    final String sensorId = "42";
+    final String location = "Marseille";
+    final Sensor sensor = SensorFactory.create(sensorId, location, Sensor.WINDOW);
+
+    //when
+    sensor.adjustStatus("NON TRIPPED");
+
+    //then
+    Assertions.assertEquals(sensor.getMessage(), location + " is sealed");
+
+  }
+
+  @Test
   public void sensor_message_should_be_ajar_on_tripped_window_packet() {
     //given
     final String sensorId = "42";
     final String location = "Marseille";
-    final Sensor sensor = new Sensor(sensorId, location, Sensor.WINDOW);
+    final Sensor sensor = SensorFactory.create(sensorId, location, Sensor.WINDOW);
 
     //when
     sensor.adjustStatus("TRIPPED");
@@ -114,8 +129,10 @@ public class CentralUnitTest {
     static Sensor create(String id, String location, String type) {
       if (Sensor.DOOR.equals(type)) {
         return new DoorSensor(id, location);
+      }else if (Sensor.WINDOW.equals(type)) {
+        return new WindowSensor(id, location);
       }
-      return new Sensor(id, location, type);
+      return new DefaultSensor(id, location, type);
     }
   }
 
