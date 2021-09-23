@@ -54,8 +54,6 @@ public class Sensor
 		String message = "default";
 		if(!isTripped())
 		{
-//			if(getType().equals(DOOR))
-//				return getLocation() + " is closed";
 			if(getType().equals(WINDOW))
 				return getLocation() + " is sealed";
 			else if(getType().equals(MOTION))
@@ -65,9 +63,7 @@ public class Sensor
 		}
 		else
 		{
-			if(getType().equals(DOOR))
-				return getLocation() + " is open";
-			else if(getType().equals(WINDOW))
+			if(getType().equals(WINDOW))
 				return getLocation() + " is ajar";
 			else if(getType().equals(MOTION))
 				return "Motion detected in " + getLocation();

@@ -63,7 +63,7 @@ public class CentralUnitTest {
     //given
     final String sensorId = "42";
     final String location = "Marseille";
-    final Sensor sensor = new Sensor(sensorId, location, Sensor.DOOR);
+    final Sensor sensor = SensorFactory.create(sensorId, location, Sensor.DOOR);
 
     //when
     sensor.adjustStatus("TRIPPED");

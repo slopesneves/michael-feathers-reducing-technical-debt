@@ -12,6 +12,10 @@ public class DoorSensor extends Sensor{
 
   @Override
   public String getMessage() {
-    return getLocation() + " is closed";
+    return this.getLocation() + " is " + tripMessagePart();
+  }
+
+  private String tripMessagePart() {
+    return this.isTripped() ? "open" : "closed";
   }
 }
