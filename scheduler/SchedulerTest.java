@@ -8,7 +8,7 @@ public class SchedulerTest {
     @Test
     public void test() {
         final Date now = new Date();
-        Scheduler scheduler = new Scheduler("Mickey Mouse", new FakeDisplay(), new FakeMailService());
+        Scheduler scheduler = new TestScheduler("Mickey Mouse", new FakeDisplay());
         scheduler.addEvent(new Event(now, DayTime.Time1PM));
 
         Assertions.assertTrue(scheduler.hasEvents(now));
@@ -22,11 +22,15 @@ public class SchedulerTest {
         }
     }
 
-    private static class FakeMailService implements MailService {
+    private static class TestScheduler extends Scheduler {
+
+        public TestScheduler(String owner, Display display) {
+            super(owner, display);
+        }
 
         @Override
-        public void sendMail(String address, String subject, String message) {
-
+        protected void sendEmail(String address, String subject, String message) {
+            //do nothing
         }
     }
 }

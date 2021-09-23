@@ -20,19 +20,22 @@ public class Scheduler {
 		display = new SchedulerDisplay();		
 	}
 
-	public Scheduler(String owner, Display display, MailService mailService) {
+	public Scheduler(String owner, Display display) {
 		this(owner);
 		this.display = display;
-		this.mailService = mailService;
 	}
 	
 	public void addEvent(Event event) {
 		event.added();
 		events.add(event);
-		mailService.sendMail("jacques@spg1.com", "Event Notification", event.toString());
+		sendEmail("jacques@spg1.com", "Event Notification", event.toString());
 		display.showEvent(event);		
 	}
-	
+
+	protected void sendEmail(String address, String subject, String message) {
+		mailService.sendMail(address, subject, message);
+	}
+
 	public boolean hasEvents(Date date) {
 		for(Iterator it = events.iterator(); it.hasNext();) {
 			Event event = (Event)it.next();
